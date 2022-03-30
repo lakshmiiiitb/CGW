@@ -95,4 +95,9 @@ public class Partner {
     public void setContactno(String contactno) {
         this.contactno = contactno;
     }
+
+    public String toString()
+    {
+        return this.getStoreName()+" "+this.getStoreLoc()+" "+this.getContactno();
+    }
 }
