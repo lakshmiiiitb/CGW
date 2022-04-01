@@ -5,7 +5,7 @@
 
 <html>
 <body>
-<form id="form" action="viewitems/">
+<form id="form" action="viewitems">
 <%
     List<Partner> shops = (List<Partner>) session.getAttribute("shops");
     for(Partner p:shops){
@@ -21,21 +21,5 @@
     <input type="submit" value="Next"/>
 </form>
 </body>
-<script>
-    var form=document.getElementById('form')
-    form.addEventListener('submit',async function (event) {
-        event.preventDefault()
-        console.log("reached")
-        <%
 
-                for(Partner p:shops){
-        %>
-            if(document.getElementById(<%=p.getStoreName()%>).checked)
-            {
-                console.log("Inside if")
-                location.href=""
-            }
-        <%}%>
-    })
-</script>
 </html>

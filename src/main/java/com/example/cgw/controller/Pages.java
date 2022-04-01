@@ -8,8 +8,9 @@ import com.example.cgw.dao.DeliveryRepo;
 import com.example.cgw.dao.PartnerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -23,14 +24,14 @@ public class Pages {
     @Autowired
     PartnerRepo part;
 
-    @RequestMapping("/")
+    @GetMapping ("/")
     public String firstpage()
     {
         System.out.println("Entered");
        return "home.html";
     }
-    @RequestMapping("/login")
-    public String login(String type,String username,String password)
+    @RequestMapping (path = "/login",method = RequestMethod.GET)
+    public String login(String type, String username, String password, HttpSession session)
     {
         System.out.println(type+"  "+username+"  "+password);
         System.out.println("Entered login");
@@ -38,10 +39,15 @@ public class Pages {
         {
             //check cust table
             //on successful login, return respective dashboards
-            List<Customer> account=cust.findByUsername(username);
-            System.out.println(account.size());
-            if(account.get(0).getPassword().equals(password))
+            Customer account=cust.findByUsername(username);
+            if(account == null)
+                return "failure.html";
+            //System.out.println(account.size());
+            if(account.getPassword().equals(password))
+            {
+                session.setAttribute("Login",account.getName());
                 return "customerdashboard.html";
+            }
             else
                 return "failure.html";
 
@@ -49,9 +55,14 @@ public class Pages {
         else if(type.equals("del"))
         {
             //check cust table
-            List<Delivery> account=del.findByUsername(username);
-            if(account.get(0).getPassword().equals(password))
+            Delivery account=del.findByUsername(username);
+            if(account == null)
+                return "failure.html";
+            if(account.getPassword().equals(password))
+            {
+                session.setAttribute("Login",account.getName());
                 return "deliverydashboard.html";
+            }
             else
                 return "failure.html";
 
@@ -61,11 +72,11 @@ public class Pages {
             //check cust table
             Partner account=part.findByUsername(username);
             if(account == null)
-                System.out.println("true");
+                return "failure.html";
             if(account.getPassword().equals(password))
             {
-                System.out.println("succ");
-                return "partnerdashboard.html";
+                session.setAttribute("Login",account.getStoreName());
+                return "partnerdashboard.jsp";
             }
             else
                 return "failure.html";
@@ -80,7 +91,7 @@ public class Pages {
         System.out.println("Entered regoster");
         return "register.html";
     }
-    @RequestMapping("/partner")
+    @RequestMapping(path = "/partner",method = RequestMethod.GET)
     public String partner(Partner p)
     {
         //register
@@ -89,7 +100,7 @@ public class Pages {
         System.out.println("Saved");
         return "home.html";//present him home page, so he can login
     }
-    @RequestMapping("/customer")
+    @RequestMapping(path="/customer",method = RequestMethod.GET)
     public String customer(Customer c)
     {
         //register
@@ -98,7 +109,7 @@ public class Pages {
         System.out.println("cust reg");
         return "home.html";//present him home page, so he can login
     }
-    @RequestMapping("/delivery")
+    @RequestMapping(path="/delivery",method = RequestMethod.GET)
     public String delivery(Delivery d)
     {
         //register

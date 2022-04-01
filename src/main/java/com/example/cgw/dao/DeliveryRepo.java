@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface DeliveryRepo extends JpaRepository<Delivery,Integer> {
-    List<Delivery> findByUsername(String uname);
+    Delivery findByUsername(String uname);
 }
 

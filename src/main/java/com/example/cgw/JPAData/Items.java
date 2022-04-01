@@ -65,4 +65,14 @@ public class Items {
     public void setPartner(Partner p) {
         this.partner = p;
     }
+
+    @Override
+    public String toString() {
+        return "Items{" +
+                "item_name='" + item_name + '\'' +
+                ", price=" + price +
+                ", qty=" + qty +
+                ", partner=" + partner +
+                '}';
+    }
 }

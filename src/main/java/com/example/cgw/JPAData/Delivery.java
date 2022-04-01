@@ -73,4 +73,13 @@ public class Delivery {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "Delivery{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\''+
+                '}';
+    }
 }

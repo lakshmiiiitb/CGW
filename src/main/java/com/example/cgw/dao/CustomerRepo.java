@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface CustomerRepo extends JpaRepository<Customer,Integer> {
-    List<Customer> findByUsername(String uname);
+    Customer findByUsername(String uname);
 }
