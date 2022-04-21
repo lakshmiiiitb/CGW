@@ -11,6 +11,10 @@ public class Items {
     private String item_name;
     private double price;
     private int qty;
+    private String description;
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private String image;
 
     @ManyToOne
     @JoinColumn(name = "shop_id")
@@ -18,12 +22,14 @@ public class Items {
 
     public Items(){}
 
-    public Items(int id, String item_name, double price, int qty, Partner p) {
+    public Items(int id, String item_name, double price, int qty, Partner p , String image, String desc) {
         this.id = id;
         this.item_name = item_name;
         this.price = price;
         this.qty = qty;
         this.partner = p;
+        this.image=image;
+        this.description=desc;
     }
 
     public int getId() {
@@ -66,6 +72,21 @@ public class Items {
         this.partner = p;
     }
 
+    public String getImage() {
+        return image;
+    }
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "Items{" +
@@ -73,6 +94,8 @@ public class Items {
                 ", price=" + price +
                 ", qty=" + qty +
                 ", partner=" + partner +
+                ", Image=" + image+
+                ", Description="+description+
                 '}';
     }
 }

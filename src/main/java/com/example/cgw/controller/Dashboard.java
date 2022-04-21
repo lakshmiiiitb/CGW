@@ -12,11 +12,12 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
+@RequestMapping("/customer")
 public class Dashboard {
     @Autowired
     PartnerRepo partnerRepo;
 
-    @RequestMapping("/custdash")
+    @RequestMapping("custdash")
     public String cust_dash(String location, HttpSession session)
     {
         //fetch value of location chosen

@@ -18,8 +18,6 @@ public class Orders
     @JoinColumn(name = "partner_id")
     Partner partner;
 
-
-
     public Orders(int id, Cart cart, Address address, Partner partner) {
         this.id = id;
         this.cart = cart;
@@ -27,7 +25,6 @@ public class Orders
         this.partner = partner;
         //this.delivery=delivery;
     }
-
 
     public Orders(){}
 

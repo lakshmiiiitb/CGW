@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-@Controller
+@CrossOrigin(origins = "http://localhost:3000/")
+@RestController
 public class Pages {
     @Autowired
     CustomerRepo cust;
@@ -24,14 +25,9 @@ public class Pages {
     @Autowired
     PartnerRepo part;
 
-    @GetMapping ("/")
-    public String firstpage()
-    {
-        System.out.println("Entered");
-       return "home.html";
-    }
-    @RequestMapping (path = "/login",method = RequestMethod.GET)
-    public String login(String type, String username, String password, HttpSession session)
+
+    @PostMapping(path = "/login")
+    public String login(String type, String username, String password)
     {
         System.out.println(type+"  "+username+"  "+password);
         System.out.println("Entered login");
@@ -45,7 +41,7 @@ public class Pages {
             //System.out.println(account.size());
             if(account.getPassword().equals(password))
             {
-                session.setAttribute("Login",account.getName());
+                //session.setAttribute("Login",account.getName());
                 return "customerdashboard.html";
             }
             else
@@ -60,7 +56,7 @@ public class Pages {
                 return "failure.html";
             if(account.getPassword().equals(password))
             {
-                session.setAttribute("Login",account.getName());
+                //session.setAttribute("Login",account.getName());
                 return "deliverydashboard.html";
             }
             else
@@ -75,7 +71,7 @@ public class Pages {
                 return "failure.html";
             if(account.getPassword().equals(password))
             {
-                session.setAttribute("Login",account.getStoreName());
+                //session.setAttribute("Login",account.getStoreName());
                 return "partnerdashboard.jsp";
             }
             else
@@ -85,13 +81,8 @@ public class Pages {
         //verify credentials
         return "home.html";
     }
-    @RequestMapping("/register")
-    public String register()
-    {
-        System.out.println("Entered regoster");
-        return "register.html";
-    }
-    @RequestMapping(path = "/partner",method = RequestMethod.GET)
+
+    @PostMapping(path = "/partner")
     public String partner(Partner p)
     {
         //register
@@ -100,7 +91,7 @@ public class Pages {
         System.out.println("Saved");
         return "home.html";//present him home page, so he can login
     }
-    @RequestMapping(path="/customer",method = RequestMethod.GET)
+    @PostMapping(path="/customer")
     public String customer(Customer c)
     {
         //register
@@ -109,7 +100,7 @@ public class Pages {
         System.out.println("cust reg");
         return "home.html";//present him home page, so he can login
     }
-    @RequestMapping(path="/delivery",method = RequestMethod.GET)
+    @PostMapping(path="/delivery")
     public String delivery(Delivery d)
     {
         //register

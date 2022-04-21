@@ -14,6 +14,7 @@ public class Partner {
     private String username;
     private String password;
     private String contactno;
+    private String email;
 
     @OneToMany(cascade=CascadeType.ALL)
     private Set<Items> itemsSet;
@@ -24,12 +25,13 @@ public class Partner {
     public Partner() {
     }
 
-    public Partner(String storeName, String storeLoc, String username, String password, String contactno) {
+    public Partner(String storeName, String storeLoc, String username, String password, String contactno,String email) {
         this.storeName = storeName;
         this.storeLoc = storeLoc;
         this.username = username;
         this.password = password;
         this.contactno = contactno;
+        this.email=email;
     }
 
     public Set<Orders> getOrdersSet() {
@@ -94,6 +96,14 @@ public class Partner {
 
     public void setContactno(String contactno) {
         this.contactno = contactno;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String toString()

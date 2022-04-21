@@ -11,16 +11,24 @@ public class Cart {
     private String item_name;
     private int qty;
     private double price;
+    private String description;
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private String image;
+
     @ManyToOne
     @JoinColumn(name = "cust_id")
     Customer customer;
 
     public Cart(){}
-    public Cart(int id, String item_name, int qty, double price, Customer customer) {
-        this.id = id;
+
+    public Cart(String item_name, int qty, double price, String description, String image, Customer customer) {
+
         this.item_name = item_name;
         this.qty = qty;
         this.price = price;
+        this.description = description;
+        this.image = image;
         this.customer = customer;
     }
 
@@ -62,5 +70,34 @@ public class Cart {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "id=" + id +
+                ", item_name='" + item_name + '\'' +
+                ", qty=" + qty +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", image='" + image + '\'' +
+                ", customer=" + customer +
+                '}';
     }
 }

@@ -6,15 +6,17 @@ import javax.persistence.*;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    // 1 vijay nagar
+    // 2 shanti nagar
     private Integer id;
     private String area;
     private String city;
     private String state;
+
     @ManyToOne
     //Adding the name
     @JoinColumn(name = "Cust_id")
     private Customer customer;
-
 
     public Address(){}
 

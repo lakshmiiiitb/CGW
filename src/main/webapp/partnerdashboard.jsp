@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"%>
-HttpSession sessionid = request.getSession();
-sessionid.setAttribute("userId", userId);
 <html>
 <body>
+<p id="shop">
+    <%=session.getAttribute("Login")%>
+</p>
 <a href="home.html">Logout</a>
 <a href="partnerdashboard.html">MainPage</a>
 show him list of orders
@@ -14,25 +15,4 @@ provide him choices to update inventory
     <input type="submit" value="Next"/>
 </form>
 </body>
-<script>
-    var form=document.getElementById('form')
-    form.addEventListener('submit',async function (event) {
-        event.preventDefault()
-        console.log("reached")
-        if(document.getElementById('orders').checked)
-        {
-            console.log("Inside if")
-            location.href="customer.html"
-        }
-        else if(document.getElementById('').checked)
-        {
-            location.href="partner.html"
-        }
-        else if(document.getElementById('del').checked)
-        {
-            console.log("Inside if")
-            location.href="delivery.html"
-        }
-    })
-</script>
 </html>

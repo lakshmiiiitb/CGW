@@ -8,10 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class ViewShopsByLocation {
     @Autowired
     PartnerRepo partnerRepo;
@@ -20,8 +21,7 @@ public class ViewShopsByLocation {
     ItemsRepo itemsRepo;
 
     @RequestMapping(path = "viewitems")
-    @ResponseBody
-    public String viewshops(String choice)
+    public List<Items> viewshops(String choice)
     {
         System.out.println("worked");
         System.out.println(choice);
@@ -29,6 +29,6 @@ public class ViewShopsByLocation {
         List<Items>  items= itemsRepo.findAllByPartner(shop);
         for(Items i:items)
             System.out.println(i);
-        return "returned"+choice;
+        return items;
     }
 }
