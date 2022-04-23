@@ -5,8 +5,7 @@ import com.example.cgw.dao.PartnerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
+
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -25,7 +24,7 @@ public class Dashboard {
         //return one view to display them
         System.out.println("entered mv");
 
-        List<Partner> shops= partnerRepo.findAllByStoreLoc(location);
+        List<Partner> shops= partnerRepo.findByStoreLoc(location);
         session.setAttribute("shops",shops);
 
         for(Partner p:shops)

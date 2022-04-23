@@ -2,6 +2,7 @@ package com.example.cgw.controller;
 
 import com.example.cgw.JPAData.Customer;
 import com.example.cgw.JPAData.Delivery;
+import com.example.cgw.JPAData.Login;
 import com.example.cgw.JPAData.Partner;
 import com.example.cgw.dao.CustomerRepo;
 import com.example.cgw.dao.DeliveryRepo;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000/")
+@CrossOrigin(origins = "*")
 @RestController
 public class Pages {
     @Autowired
@@ -27,8 +28,11 @@ public class Pages {
 
 
     @PostMapping(path = "/login")
-    public String login(String type, String username, String password)
+    public Object login(@RequestBody Login login)
     {
+        String type=login.getType();
+        String username=login.getUsername();
+        String password=login.getPassword();
         System.out.println(type+"  "+username+"  "+password);
         System.out.println("Entered login");
         if(type.equals("cust"))
@@ -37,15 +41,15 @@ public class Pages {
             //on successful login, return respective dashboards
             Customer account=cust.findByUsername(username);
             if(account == null)
-                return "failure.html";
+                return null;
             //System.out.println(account.size());
             if(account.getPassword().equals(password))
             {
                 //session.setAttribute("Login",account.getName());
-                return "customerdashboard.html";
+                return account;
             }
             else
-                return "failure.html";
+                return null;
 
         }
         else if(type.equals("del"))
@@ -53,14 +57,14 @@ public class Pages {
             //check cust table
             Delivery account=del.findByUsername(username);
             if(account == null)
-                return "failure.html";
+                return null;
             if(account.getPassword().equals(password))
             {
                 //session.setAttribute("Login",account.getName());
-                return "deliverydashboard.html";
+                return account;
             }
             else
-                return "failure.html";
+                return null;
 
         }
         else if(type.equals("part"))
@@ -68,45 +72,48 @@ public class Pages {
             //check cust table
             Partner account=part.findByUsername(username);
             if(account == null)
-                return "failure.html";
+                return null;
             if(account.getPassword().equals(password))
             {
                 //session.setAttribute("Login",account.getStoreName());
-                return "partnerdashboard.jsp";
+                return account;
             }
             else
-                return "failure.html";
+                return null;
 
         }
         //verify credentials
-        return "home.html";
+        return null;
     }
 
     @PostMapping(path = "/partner")
-    public String partner(Partner p)
+    public Partner partner(@RequestBody Partner p)
     {
         //register
         //accept partner input, save it in db
+        //System.out.println(p);
+        //Partner p=new Partner(storeName,storeLoc,username,password,contactno,email);
         part.save(p);
+        System.out.println(p);
         System.out.println("Saved");
-        return "home.html";//present him home page, so he can login
+        return p;//present him home page, so he can login
     }
     @PostMapping(path="/customer")
-    public String customer(Customer c)
+    public Customer customer(@RequestBody Customer c)
     {
         //register
         //accept customer input, save it in db
         cust.save(c);
         System.out.println("cust reg");
-        return "home.html";//present him home page, so he can login
+        return c;//present him home page, so he can login
     }
     @PostMapping(path="/delivery")
-    public String delivery(Delivery d)
+    public Delivery delivery(@RequestBody Delivery d)
     {
         //register
         //accept delivery input, save it in db
         del.save(d);
         System.out.println("Del reg");
-        return "home.html";//present him home page, so he can login
+        return d;//present him home page, so he can login
     }
 }

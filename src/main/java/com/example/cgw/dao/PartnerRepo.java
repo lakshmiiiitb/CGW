@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface PartnerRepo extends JpaRepository<Partner,Integer> {
     public Partner findByUsername(String uname);
-    public List<Partner> findAllByStoreLoc(String loc);
+    public List<Partner> findByStoreLoc(String loc);
     public Partner findByStoreName(String store);
     public Partner findById(int id);
 
