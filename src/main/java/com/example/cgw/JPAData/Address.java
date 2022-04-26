@@ -12,6 +12,7 @@ public class Address {
     private String area;
     private String city;
     private String state;
+    private String pincode;
 
     @ManyToOne
     //Adding the name

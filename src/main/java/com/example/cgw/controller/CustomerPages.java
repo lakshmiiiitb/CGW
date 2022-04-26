@@ -39,11 +39,10 @@ public class CustomerPages {
 
 
     @PostMapping(path = "viewshops")
-    public List<Partner> viewShopsbyLocation(@RequestBody String loc)
+    public List<Partner> viewShopsbyLocation(@RequestBody LocationType loc)
     {
-
-        loc=loc.substring(0,loc.length()-1);
-        List<Partner> shops=partnerRepo.findByStoreLoc(loc);
+        //String location=loc.getLocation().substring(0,loc.getLocation().length()-1);
+        List<Partner> shops=partnerRepo.findByStoreLoc(loc.getLocation(), loc.getType());
         System.out.println(loc);
         System.out.println(shops.size());
         for(Partner shp:shops)
@@ -51,7 +50,20 @@ public class CustomerPages {
         return shops;
     }
 
-    @Transactional
+    @PostMapping(path = "viewshops1")
+    public List<Partner> viewShopsbyLocation1(@RequestBody String location,@RequestBody String type)
+    {
+        System.out.println(location+" "+type);
+        //String location=loc.getLocation().substring(0,loc.getLocation().length()-1);
+        List<Partner> shops=partnerRepo.findByStoreLoc(location, type);
+
+        System.out.println(shops.size());
+        for(Partner shp:shops)
+            System.out.println(shp);
+        return shops;
+    }
+
+    /*@Transactional
     @PutMapping(path = "/{id}/addtocart")
     public String addToCart(@PathVariable("id") int id,String itemname, String shopname, int qty)
     {
@@ -73,6 +85,35 @@ public class CustomerPages {
         System.out.println(items.getItem_name());
 
         return items.getItem_name();
+    }*/
+
+
+    @Transactional
+    @GetMapping(path = "/addtocart/{userid}/{shopid}/{itemid}/{qty}")
+    public String addToCart(@PathVariable("userid") int id,@PathVariable("shopid") int shopid, @PathVariable("itemid") int itemid, @PathVariable("qty") int qty)
+    {
+        Customer customer=customerRepo.findById(id);
+        //Partner partner=partnerRepo.findById(cartDetails.getShopId());
+        Partner partner=partnerRepo.findById(shopid);
+        Items items=itemsRepo.findByShopAndItem(partner, itemid);
+        System.out.println(partner.getStoreName());
+        System.out.println(items.getItem_name());
+        if(items!=null)
+        {
+            int status=itemsRepo.decrementQuantity(qty,partner,itemid);
+            System.out.println(status);
+            if(status >0)
+                System.out.println("Updated");
+            else
+                System.out.println("Not updated");
+
+            Cart c=new Cart(items.getItem_name(),qty, qty*items.getPrice(), items.getDescription(),items.getImage(), customer);
+            cartRepo.save(c);
+        }
+
+        //System.out.println(items.getItem_name());
+
+        return items.getItem_name();
     }
 
     @GetMapping(path = "viewcart/{id}")
@@ -87,10 +128,26 @@ public class CustomerPages {
     @GetMapping(path = "viewaddress/{id}")
     public List<Address> viewAddress(@PathVariable("id") int id)
     {
+        System.out.println(id);
         List<Address> addresses = addressRepo.findByCustomer(customerRepo.findById(id));
+        System.out.println(addresses.size());
         for(Address c:addresses)
             System.out.println(c);
         return addresses;
+    }
+
+    @GetMapping("item/{id}")
+    public Items getItem(@PathVariable("id") int id)
+    {
+        Items items=itemsRepo.findById(id);
+        return items;
+    }
+
+    @GetMapping("partner/{id}")
+    public Partner getPartner(@PathVariable("id") int id)
+    {
+        Partner partner=partnerRepo.findById(id);
+        return partner;
     }
 
 

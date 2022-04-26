@@ -9,7 +9,10 @@ import java.util.List;
 @Repository
 public interface PartnerRepo extends JpaRepository<Partner,Integer> {
     public Partner findByUsername(String uname);
-    public List<Partner> findByStoreLoc(String loc);
+
+    @Query("from Partner where storeLoc=?1 and type=?2")
+    public List<Partner> findByStoreLoc(String loc, String type);
+
     public Partner findByStoreName(String store);
     public Partner findById(int id);
 

@@ -15,6 +15,7 @@ public class Partner {
     private String password;
     private String contactno;
     private String email;
+    private String type;
 
     @OneToMany(cascade=CascadeType.ALL)
     private Set<Items> itemsSet;

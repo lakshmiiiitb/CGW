@@ -30,27 +30,25 @@ public class Partner_pages {
     @Autowired
     ItemsRepo itemsRepo;
 
-    @RequestMapping("inventory")
-    public String show(String id,String choice, HttpSession session)
+    @GetMapping ("inventory/{id}")
+    public List<Items> viewInventory(@PathVariable("id") int id)
     {
-        String storename=id;
-        if(choice.equals("orders"))
-        {
-            System.out.println("partner orders");
-            Partner p=partnerRepo.findByStoreName(storename);
-            List<Orders> orders=ordersRepo.findAllByPartner(p);
-            session.setAttribute("orders",orders);
-            return "view_orders_to_partners.jsp";
-        }
-        else if(choice.equals("items"))
-        {
-            System.out.println("Inventory");
-            Partner p=partnerRepo.findByStoreName(storename);
-            List<Items> items=itemsRepo.findAllByPartner(p);
-            session.setAttribute("items",items);
-            return "view_inventory_to_partners.jsp";
-        }
-        return "";
+        System.out.println("Inventory");
+        Partner p=partnerRepo.findById(id);
+        List<Items> items=itemsRepo.findAllByPartner(p);
+        for(Items i : items)
+            System.out.println(i);
+        return items;
+    }
+
+    @GetMapping ("orders/{id}")
+    public List<Orders> viewOrders(@PathVariable("id") int id)
+    {
+       System.out.println("partner orders");
+       Partner p=partnerRepo.findById(id);
+       List<Orders> orders=ordersRepo.findAllByPartner(p);
+       return orders;
+
     }
 
     @PostMapping(path = "saveitem")
@@ -77,4 +75,7 @@ public class Partner_pages {
         itemsRepo.save(item);
         return "done";
     }
+
+
+
 }

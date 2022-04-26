@@ -9,6 +9,7 @@ public class Orders
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    private char status;
     @OneToOne
     Cart cart;
     @OneToOne
@@ -18,17 +19,17 @@ public class Orders
     @JoinColumn(name = "partner_id")
     Partner partner;
 
-    public Orders(int id, Cart cart, Address address, Partner partner) {
+
+    public Orders(int id, Cart cart, Address address, Partner partner, char Status) {
         this.id = id;
         this.cart = cart;
         this.address = address;
         this.partner = partner;
+        this.status= Status;
         //this.delivery=delivery;
     }
 
     public Orders(){}
-
-
 
     public Partner getPartner() {
         return partner;
@@ -60,5 +61,24 @@ public class Orders
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public char getStatus() {
+        return status;
+    }
+
+    public void setStatus(char status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Orders{" +
+                "id=" + id +
+                ", status=" + status +
+                ", cart=" + cart +
+                ", address=" + address +
+                ", partner=" + partner +
+                '}';
     }
 }

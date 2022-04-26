@@ -10,9 +10,10 @@ import java.util.List;
 
 public interface ItemsRepo extends JpaRepository<Items,Integer> {
     public List<Items> findAllByPartner(Partner p);
-    @Query("from Items where partner=?1 and item_name=?2")
-    public Items findByShopAndItem(Partner partner, String shop_name);
+    @Query("from Items where partner=?1 and id=?2")
+    public Items findByShopAndItem(Partner partner, int id);
     @Modifying
-    @Query("update Items set qty=qty-?1 where partner=?2 and item_name=?3")
-    public int decrementQuantity(int qty, Partner partner, String item_name);
+    @Query("update Items set qty=qty-?1 where partner=?2 and id=?3")
+    public int decrementQuantity(int qty, Partner partner, int id);
+    public Items findById(int id);
 }
