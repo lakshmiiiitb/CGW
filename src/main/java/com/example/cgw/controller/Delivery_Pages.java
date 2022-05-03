@@ -5,6 +5,7 @@ import com.example.cgw.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -35,12 +36,16 @@ public class Delivery_Pages {
         return delivery;
     }
 
-    @PostMapping("viewordersatdeliverylocation")
-    public List<Orders> viewOrdersAtDeliveryLocation(@RequestBody InputAddress address)
+    @GetMapping("viewordersatdeliverylocation/{pincode}")
+    public List<Orders> viewOrdersAtDeliveryLocation(@PathVariable("pincode") String pincode)
     {
-        Address addresses=addressRepo.findByLocAndCityAndState(address.getArea(),address.getCity(),address.getState(),address.getPincode());
+        List<Address> address=addressRepo.findByPincode(pincode);
+        List<Orders> orders= new ArrayList<>();
+        for(Address a:address)
+        {
+            orders.addAll(ordersRepo.findAllByAddress(a));
+        }
 
-        List<Orders> orders=ordersRepo.findAllByAddress(addresses);
         for(Orders o:orders)
             System.out.println(o);
 

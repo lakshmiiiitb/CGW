@@ -143,12 +143,23 @@ public class CustomerPages {
         return items;
     }
 
-    @GetMapping("partner/{id}")
-    public Partner getPartner(@PathVariable("id") int id)
+    @GetMapping("address/{id}")
+    public List<Address> getAddress(@PathVariable("id") int id)
     {
-        Partner partner=partnerRepo.findById(id);
-        return partner;
+        List<Address> address= addressRepo.findByCustomer(customerRepo.findById(id));
+        return address;
     }
+
+
+    @PostMapping("addAddress/{id}")
+    public String addAddress(@PathVariable("id") int id, Address address)
+    {
+        address.setCustomer(customerRepo.findById(id));
+        addressRepo.save(address);
+        return "done";
+    }
+
+
 
 
 

@@ -30,6 +30,13 @@ public class Partner_pages {
     @Autowired
     ItemsRepo itemsRepo;
 
+    @GetMapping("partner/{id}")
+    public Partner getPartner(@PathVariable("id") int id)
+    {
+        Partner partner=partnerRepo.findById(id);
+        return partner;
+    }
+
     @GetMapping ("inventory/{id}")
     public List<Items> viewInventory(@PathVariable("id") int id)
     {
