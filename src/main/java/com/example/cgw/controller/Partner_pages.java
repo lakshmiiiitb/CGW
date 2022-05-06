@@ -84,5 +84,24 @@ public class Partner_pages {
     }
 
 
+    @PostMapping(path = "addprofilephoto")
+    public String  saveProfile(int shopid,MultipartFile file, String item_name, int qty, double price, String desc)
+    {
+        Partner partner=partnerRepo.findById(shopid);
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        if(fileName.contains(".."))
+        {
+            System.out.println("not a a valid file");
+        }
+        try {
+            partner.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        partnerRepo.save(partner);
+        return "done";
+    }
+
+
 
 }

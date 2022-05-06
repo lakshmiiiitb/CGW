@@ -6,14 +6,21 @@ import javax.persistence.*;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    // 1 vijay nagar
-    // 2 shanti nagar
     private Integer id;
+    @Column(name="AREA" , nullable = false)
     private String area;
+    @Column(name="CITY" , nullable = false)
     private String city;
+    @Column(name="STATE" , nullable = false)
     private String state;
+    @Column(name="PINCODE" , nullable = false)
     private String pincode;
-
+    @Column(name="NAME" , nullable = false)
+    private String name;
+    @Column(name="PHONE" , nullable = false)
+    private String phone;
+    @Column(name="HOUSENUMBER")
+    private String homenumber;
     @ManyToOne
     //Adding the name
     @JoinColumn(name = "Cust_id")
@@ -22,13 +29,16 @@ public class Address {
     public Address(){}
 
 
-    public Address(Integer id, String area, String city, String state, Customer p, String pincode) {
+    public Address(Integer id, String area, String city, String state, Customer p, String pincode, String phone, String name, String homenumber) {
         this.id = id;
         this.area = area;
         this.city = city;
         this.state = state;
         this.customer = p;
         this.pincode=pincode;
+        this.name=name;
+        this.phone=phone;
+        this.homenumber = homenumber;
     }
     public Integer getId() {
         return id;
@@ -78,10 +88,36 @@ public class Address {
         this.pincode = pincode;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getHomenumber() {
+        return homenumber;
+    }
+
+    public void setHomenumber(String homenumber) {
+        this.homenumber = homenumber;
+    }
+
     @Override
     public String toString() {
         return "Address{" +
                 "id=" + id +
+                " Ordered for = '" + name + '\'' +
+                " House number = '" + homenumber + '\'' +
                 ", area='" + area + '\'' +
                 ", city='" + city + '\'' +
                 ", state='" + state + '\'' +

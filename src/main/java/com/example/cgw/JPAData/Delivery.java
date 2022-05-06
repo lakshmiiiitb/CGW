@@ -8,12 +8,20 @@ public class Delivery {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private  Integer id;
+    @Column(name="NAME" , nullable = false)
     private String name;
+    @Column(name="email" , nullable = false)
     private String email;
+    @Column(name="USERNAME" , nullable = false , unique = true)
     private String username;
+    @Column(name="PASSWORD" , nullable = false)
     private String password;
+    @Column(name="PHONE" , nullable = false)
     private String phone;
 
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private String image;
 
 
     public Delivery() {
@@ -72,6 +80,14 @@ public class Delivery {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override

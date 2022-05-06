@@ -9,11 +9,20 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    @Column(name="NAME" , nullable = false)
     private String name;
+    @Column(name="EMAIL" , nullable = false)
     private String email;
+    @Column(name="USERNAME" , nullable = false,unique = true)
     private String username;
+    @Column(name="PASSWORD" , nullable = false)
     private String password;
+    @Column(name="PHONE" , nullable = false)
     private String phone;
+
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private String image;
 
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Address> addresslist;
@@ -93,5 +102,13 @@ public class Customer {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

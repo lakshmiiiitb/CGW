@@ -8,12 +8,16 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @Column(name="ITEM_NAME" , nullable = false)
     private String item_name;
+    @Column(name="QTY" , nullable = false)
     private int qty;
+    @Column(name="PRICE" , nullable = false)
     private double price;
+    @Column(name="DESCRIPTION" , nullable = false)
     private String description;
     @Lob
-    @Column(columnDefinition = "MEDIUMBLOB")
+    @Column(columnDefinition = "MEDIUMBLOB",nullable = false)
     private String image;
 
     @ManyToOne

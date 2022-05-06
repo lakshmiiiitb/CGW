@@ -9,13 +9,23 @@ public class Partner {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private  Integer id;
+    @Column(name="STORENAME" , nullable = false)
     private String storeName;
+    @Column(name="STORELOC" , nullable = false)
     private String storeLoc;
+    @Column(name="USERNAME" , nullable = false, unique = true)
     private String username;
+    @Column(name="PASSWORD" , nullable = false)
     private String password;
+    @Column(name="contactno" , nullable = false)
     private String contactno;
+    @Column(name="email" , nullable = false)
     private String email;
-    private String type;
+    @Column(name="description")
+    private String description;
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private String image;
 
     @OneToMany(cascade=CascadeType.ALL)
     private Set<Items> itemsSet;
@@ -110,5 +120,13 @@ public class Partner {
     public String toString()
     {
         return this.getStoreName()+" "+this.getStoreLoc()+" "+this.getContactno();
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
