@@ -20,7 +20,7 @@ services:
       context: .                          #docker file path (. means root directory)
       dockerfile: Dockerfile              #docker file name
     ports:
-      - "8888:8888"                       #docker container port with your os port
+      - "9087:9087"                       #docker container port with your os port
     restart: always
 
     depends_on:                           #define dependencies of this app
