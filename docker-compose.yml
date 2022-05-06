@@ -1,31 +1,19 @@
-version: '3.3'
-
+version: '3'
 services:
-  #service 1: definition of mysql database
-  db:
-    image: mysql/mysql-server:latest
-    container_name: mysql-db2
+  mysql-standalone:
+    image: 'mysql:5.7'
     environment:
-      - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_USER=lakshmi
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_DATABASE=demo
     ports:
-      - "3306:3306"
-    restart: always
-
-  #service 3: definition of your spring-boot app
-  cgw:                        #it is just a name, which will be used only in this file.
-    image: cgw_be               #name of the image after dockerfile executes
-    container_name: cgw_be-app  #name of the container created from docker image
-    build:
-      context: .                          #docker file path (. means root directory)
-      dockerfile: Dockerfile              #docker file name
+      - "3307:3306"
+  springboot-docker-container:
+    image: lakshmihegdeiiitb/backend
     ports:
-      - "8888:8888"                       #docker container port with your os port
-    restart: always
-
-    depends_on:                           #define dependencies of this app
-      - db                                #dependency name (which is defined with this name 'db' in this file earlier)
+      - "9087:9087"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/GiftDB?createDatabaseIfNotExist=true
-      SPRING_DATASOURCE_USERNAME: lakshmi
-      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-standalone:3306/GiftDB?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: "root"
+      SPRING_DATASOURCE_PASSWORD: "root"
+   
